@@ -1,0 +1,29 @@
+{
+  "name": "sysset-backend",
+  "version": "1.0.0",
+  "description": "backend for sysset authenticator",
+  "keywords": [
+    "authenticator"
+  ],
+  "homepage": "https://github.com/tharakeshrajesh/Sysset-Authenticator#readme",
+  "bugs": {
+    "url": "https://github.com/tharakeshrajesh/Sysset-Authenticator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tharakeshrajesh/Sysset-Authenticator.git"
+  },
+  "license": "MIT",
+  "author": "Tharakesh Rajesh",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "expressjs": "^1.0.1",
+    "fernet": "^0.3.3",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

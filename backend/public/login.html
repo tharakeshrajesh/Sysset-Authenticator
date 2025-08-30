@@ -1,0 +1,24 @@
+<h3>Login</h3>
+<input type="email" id="emailInput" placeholder="Enter your email" required>
+<button onclick="requestOneTimeKey()">Get Key</button>
+
+<script>
+  async function requestOneTimeKey() {
+    const email = document.getElementById('emailInput').value;
+
+    if (!email) return alert('Please enter an email.');
+
+    const res = await fetch('/auth/getKey', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert(`One time key assigned: ${data.key}`);
+    } else {
+      alert(data.error || 'Something went wrong.');
+    }
+  }
+</script>
