@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login</title>
+<title>Reset Password</title>
 <style>
   body {
     background-color: #0a0a0a;
@@ -16,7 +16,7 @@
     margin: 0;
   }
 
-  .login-container {
+  .reset-container {
     background-color: #111;
     padding: 40px;
     border-radius: 12px;
@@ -25,13 +25,13 @@
     width: 320px;
   }
 
-  .login-container h3 {
+  .reset-container h3 {
     margin-bottom: 30px;
     font-size: 28px;
     text-shadow: 0 0 10px #00ff6a;
   }
 
-  .login-container input[type="email"] {
+  .reset-container input[type="email"] {
     width: 100%;
     padding: 12px 15px;
     margin-bottom: 20px;
@@ -43,13 +43,13 @@
     transition: border 0.3s, box-shadow 0.3s;
   }
 
-  .login-container input[type="email"]:focus {
+  .reset-container input[type="email"]:focus {
     border-color: #00ff6a;
     box-shadow: 0 0 8px #00ff6a70;
     outline: none;
   }
 
-  .login-container button {
+  .reset-container button {
     width: 100%;
     padding: 12px;
     background-color: #00ff6a;
@@ -59,78 +59,42 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s, box-shadow 0.3s, transform 0.1s;
-    margin-bottom: 12px;
+    transition: background 0.3s, box-shadow 0.3s;
   }
 
-  .login-container button:hover {
+  .reset-container button:hover {
     background-color: #00cc55;
     box-shadow: 0 0 15px #00ff6a80;
   }
 
-  .login-container button:active {
+  .reset-container button:active {
     transform: scale(0.98);
-  }
-
-  .reset-btn {
-    background-color: transparent;
-    color: #00ff6a;
-    border: 2px solid #00ff6a;
-    font-weight: normal;
-  }
-
-  .reset-btn:hover {
-    background-color: #00ff6a;
-    color: #111;
-    box-shadow: 0 0 15px #00ff6a80;
   }
 </style>
 </head>
 <body>
-  <div class="login-container">
-    <h3>Login</h3>
-    <input type="email" id="emailInput" placeholder="Enter your email" required>
+  <div class="reset-container">
+    <h3>Reset Password</h3>
+    <input type="email" id="emailInput" placeholder="Enter your email" value="emailvaluehere" required>
     <button onclick="requestOneTimeKey()">Get Key</button>
-    <button class="reset-btn" onclick="window.location.href='/resetPassword'">Reset Password</button>
   </div>
-
 <script>
   async function requestOneTimeKey() {
-    const email = document.getElementById('emailInput').value;
+    const email = document.getElementById('emailInput').value.trim();
     if (!email) return alert('Please enter an email.');
 
     const res = await fetch('/auth/getKey', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, status : 'l' })
+      body: JSON.stringify({ email: email, status: 'p1' })
     });
 
     const data = await res.json();
     if (res.ok) {
-      alert(`One time key assigned:\n${data.key}\n\nCopied to clipboard.`);
-      navigator.clipboard.writeText(data.key);
+      alert(`An email was sent. Please check your inbox/spam folder.`);
     } else {
       alert(data.error || 'Something went wrong.');
     }
-
-    fetch('/auth/getCookie', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, key : data.key })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.sessionToken) {
-            const expires = new Date();
-            expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000));
-            
-            document.cookie = `email=${email}; session=${data.sessionToken}; expires=${expires.toUTCString()}; path=/`;
-            
-            //window.location.href = '/blackjack';
-        }
-    })
-    .catch(error => console.error('Error:', error));
-
   }
 </script>
 </body>

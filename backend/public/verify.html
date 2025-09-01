@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Verified</title>
+<style>
+  body {
+    background-color: #0a0a0a;
+    color: #00ff6a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .verify-container {
+    background-color: #111;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #00ff6a50;
+    text-align: center;
+    width: 400px;
+  }
+
+  .verify-container h1 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px #00ff6a;
+  }
+
+  .verify-container button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background-color: #00ff6a;
+    color: #111;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s, transform 0.1s;
+  }
+
+  .verify-container button:hover {
+    background-color: #00cc55;
+    box-shadow: 0 0 15px #00ff6a80;
+  }
+
+  .verify-container button:active {
+    transform: scale(0.98);
+  }
+</style>
+</head>
+<body>
+  <div class="verify-container">
+    <h1>Your e-mail address <span id="emailText">email</span> is verified.</h1>
+    <button onclick="window.location.href='/auth/verify?verificationCode=email&deleteAccount=true';">
+      Click this button if you misclicked and accidentally verified this email.
+    </button>
+    <button onclick="window.location.href='/resetPassword?mail=email';">
+      Click this button to finish setting up your account.
+    </button>
+  </div>
+
+<script>
+  // Replace placeholder "email" in buttons and text with actual email if needed
+  const email = "email"; // replace dynamically if needed
+  document.getElementById('emailText').textContent = email;
+  const buttons = document.querySelectorAll('button');
+  buttons[0].onclick = () => window.location.href = `/auth/verify?verificationCode=${email}&deleteAccount=true`;
+  buttons[1].onclick = () => window.location.href = `/resetPassword?mail=${email}`;
+</script>
+</body>
+</html>

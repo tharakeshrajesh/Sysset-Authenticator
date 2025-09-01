@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sysset Authenticator</title>
+<style>
+  body {
+    background-color: #0a0a0a;
+    color: #00ff6a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 40px;
+    text-shadow: 0 0 15px #00ff6a;
+  }
+
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 300px;
+  }
+
+  .button-container button {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #00ff6a;
+    color: #0a0a0a;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s, transform 0.1s;
+  }
+
+  .button-container button:hover {
+    background-color: #00cc55;
+    box-shadow: 0 0 20px #00ff6a80;
+  }
+
+  .button-container button:active {
+    transform: scale(0.97);
+  }
+
+  footer {
+    position: absolute;
+    bottom: 20px;
+    color: #00ff6a80;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Sysset Authenticator</h1>
+
+<div class="button-container">
+  <button onclick="window.location.href='/login'">Login</button>
+  <button onclick="window.location.href='/register'">Register</button>
+  <button onclick="window.location.href='/resetPassword'">Reset Password</button>
+</div>
+
+<footer>
+  &copy; 2025 Sysset Authenticator
+</footer>
+
+</body>
+</html>

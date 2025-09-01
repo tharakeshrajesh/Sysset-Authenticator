@@ -5,9 +5,9 @@ from sys import platform
 from os import path
 from pyautogui import size as getres
 from datetime import datetime
+from tkinter import messagebox
 
 from requests import post
-import hashlib
 from cryptography.fernet import Fernet
 from base64 import b64decode
 
@@ -15,13 +15,15 @@ authenticating = False
 cycle = False
 
 def hashandencrypt(data, key):
-    hashed_data = hashlib.sha256(data.encode()).hexdigest()
-    key = b64decode(key).decode()
-    email = b64decode(key.split('-', 1)[1]).decode()
-    str.replace(key, "-"+key, "")
-    cipher = Fernet(key.encode())
-    encrypted = cipher.encrypt(hashed_data.encode()).decode()
-    send(encrypted, email)
+    try:
+        key = b64decode(key).decode()
+        email = b64decode(key.split('-', 1)[1]).decode()
+        str.replace(key, "-"+key, "")
+        cipher = Fernet(key.encode())
+        encrypted = cipher.encrypt(data).decode()
+        send(encrypted, email)
+    except Exception:
+        messagebox.showwarning("Sysset Authenticator", "Invalid key!")
 
 def send(data, email):
     captcha = Ctk.CTkToplevel(app)
@@ -38,9 +40,15 @@ def send(data, email):
     }
 
     def fail():
-        response = post("http://localhost:3000/auth/authenticate", json=data)
-        print("Status Code", response.status_code)
-        print("JSON Response ", response.json())
+        try:
+            response = post("http://localhost:3000/auth/authenticate", json=data)
+            if response.status_code == 200:
+                messagebox.showinfo("Sysset Authenticator", "Authentication successful!")
+            else:
+                messagebox.showwarning("Sysset Authenticator", "Invalid settings!\nPlease try again with a NEW key.")
+        except Exception as e:
+            messagebox.showerror("Sysset Authenticator", f"An error occured:\n{e}\nStatus Code: {response.status_code}\nJSON Response: {response.json()}")
+        captcha.destroy()
 
     Ctk.CTkLabel(captcha, 100, 25, text="Are you human?").pack(padx=5, pady=5)
 
@@ -118,13 +126,13 @@ def authenticate():
     timel.configure(text=f"Time: {time}")
 
     authenticating = False
-    hashandencrypt(f"{bluetooth_on} {brightness} {volume} {screenres}", keyinput.get())
+    hashandencrypt(f"{bluetooth_on} {brightness} {volume} {screenres}".encode(), keyinput.get())
 
 app = Ctk.CTk()
 app.title("Sysset Authenticator")
 app.geometry("400x300")
 
-button = Ctk.CTkButton(app, 100, 25, text='Retry', command=authenticate)
+button = Ctk.CTkButton(app, 100, 25, text='Authenticate', command=authenticate)
 button.pack(padx=5, pady=5)
 
 keyinput = Ctk.CTkEntry(app, 100, 25, placeholder_text=Fernet.generate_key().decode())
