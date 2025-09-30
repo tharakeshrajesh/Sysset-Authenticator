@@ -13,14 +13,77 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
+    padding: 20px;
   }
 
   h1 {
     font-size: 36px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     text-shadow: 0 0 15px #00ff6a;
+  }
+
+  .instructions {
+    background-color: #111;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #00ff6a30;
+    max-width: 600px;
+    margin-bottom: 30px;
+    border: 1px solid #00ff6a40;
+  }
+
+  .instructions h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #00ff6a;
+  }
+
+  .instructions h3 {
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #00ff6a;
+  }
+
+  .instructions p, .instructions li {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #00ff6a90;
+    margin-bottom: 10px;
+  }
+
+  .instructions ol {
+    padding-left: 20px;
+  }
+
+  .instructions ol li {
+    margin-bottom: 8px;
+  }
+
+  .download-btn {
+    background-color: #ff6a00;
+    color: #0a0a0a;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s, transform 0.1s;
+    margin: 20px 0;
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .download-btn:hover {
+    background-color: #cc5500;
+    box-shadow: 0 0 20px #ff6a0080;
+  }
+
+  .download-btn:active {
+    transform: scale(0.97);
   }
 
   .button-container {
@@ -28,6 +91,7 @@
     flex-direction: column;
     gap: 20px;
     width: 300px;
+    margin-bottom: 30px;
   }
 
   .button-container button {
@@ -53,8 +117,7 @@
   }
 
   footer {
-    position: absolute;
-    bottom: 20px;
+    margin-top: 40px;
     color: #00ff6a80;
     font-size: 14px;
   }
@@ -63,6 +126,43 @@
 <body>
 
 <h1>Sysset Authenticator</h1>
+
+<div class="instructions">
+  <h2>How to Use</h2>
+  
+  <p><strong>Step 1:</strong> Download the Sysset Authenticator App</p>
+  <a href="httsp://github.com/tharakeshrajesh/Sysset-Authenticator/releases/latest" class="download-btn">Download Authenticator App (Windows)</a>
+  <a href="https://github.com/tharakeshrajesh/Sysset-Authenticator/releases/latest" class="download-btn">Download Authenticator App (Universal, required Python and dependencies)</a>
+  
+  <h3>🔐 For Login:</h3>
+  <ol>
+    <li>Click "Login" below</li>
+    <li>Enter your email and click "Get Key"</li>
+    <li>Copy the one-time key</li>
+    <li>Open the Authenticator App and paste the key</li>
+    <li>Enter your password in the app to authenticate</li>
+  </ol>
+
+  <h3>📝 For Registration:</h3>
+  <ol>
+    <li>Click "Register" below</li>
+    <li>Enter your email and click "Get Key"</li>
+    <li>Check your email inbox (or spam folder) for verification</li>
+    <li>Click the verification link in your email</li>
+    <li>Use the Authenticator App with the one-time key to complete setup</li>
+  </ol>
+
+  <h3>🔄 For Password Reset:</h3>
+  <ol>
+    <li>Click "Reset Password" below</li>
+    <li>Enter your email and request reset</li>
+    <li>Check your email inbox (or spam folder) for reset link</li>
+    <li>Click the link and get your one-time key</li>
+    <li>Use the Authenticator App to set your new password</li>
+  </ol>
+
+  <p style="margin-top: 20px;"><em>Note: One-time keys are valid for 1 hour and can only be used once.</em></p>
+</div>
 
 <div class="button-container">
   <button onclick="window.location.href='/login'">Login</button>

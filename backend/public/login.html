@@ -121,15 +121,20 @@
     .then(response => response.json())
     .then(data => {
         if (data.sessionToken) {
+            alert('Login successful!');
+            
             const expires = new Date();
             expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000));
             
             document.cookie = `email=${email}; session=${data.sessionToken}; expires=${expires.toUTCString()}; path=/`;
             
-            //window.location.href = '/blackjack';
+        } else if (data.error) {
+            alert('Error: ' + data.error);
         }
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        alert('Request failed: ' + error.message);
+    });
 
   }
 </script>

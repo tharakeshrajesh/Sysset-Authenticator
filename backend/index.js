@@ -160,8 +160,17 @@ app.post('/auth/getCookie', async (req, res) => {
     if (!email || !key) return res.status(400).json({ error: 'Email and key required' });
 
     if (Buffer.from(getTempKey(email)+'-'+Buffer.from(email).toString('base64')).toString('base64') == key) {
-        delete TEMP_KEYS[email];
-        res.status(200).json({ sessionToken : createSession(email) });
+        let counter = 0;
+        while (!SESSION_COOKIES[email] && counter < 300) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+            counter++;
+        }
+        
+        if (SESSION_COOKIES[email]) {
+            return res.status(200).json({ sessionToken: SESSION_COOKIES[email].token });
+        } else {
+            return res.status(408).json({ error: 'Timeout waiting for authentication' });
+        }
     } else {
         res.status(400).json({ error: 'Invalid key' });
     }
@@ -192,6 +201,7 @@ app.post('/auth/authenticate', async (req, res) => {
 
     if (status == 'l') {
         if (match) {
+            createSession(email);
             return res.json({ message : 'Login successful!' });
         } else {
             delete TEMP_KEYS[email];

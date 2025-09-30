@@ -46,6 +46,7 @@ def send(data, email):
                 messagebox.showinfo("Sysset Authenticator", "Authentication successful!")
             else:
                 messagebox.showwarning("Sysset Authenticator", "Invalid settings!\nPlease try again with a NEW key.")
+                print(response.text,response)
         except Exception as e:
             messagebox.showerror("Sysset Authenticator", f"An error occured:\n{e}\nStatus Code: {response.status_code}\nJSON Response: {response.json()}")
         captcha.destroy()
@@ -151,7 +152,6 @@ res = Ctk.CTkLabel(app, 100, 25, text="Screen Resolution: 0x0")
 res.pack(padx=5, pady=5)
 
 timel = Ctk.CTkLabel(app, 100, 25, text="Time: 00:00")
-timel.pack(padx=5, pady=5)
 
 if __name__ == "__main__":
     app.mainloop()
